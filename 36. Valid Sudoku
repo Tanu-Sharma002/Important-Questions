@@ -1,0 +1,25 @@
+class Solution {
+    public boolean isValidSudoku(char[][] board) {
+        // Each row, col, and box can contain numbers 1–9
+        boolean[][] rows = new boolean[9][9];
+        boolean[][] cols = new boolean[9][9];
+        boolean[][] boxes = new boolean[9][9];
+
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                char num = board[i][j];
+                if (num != '.') {
+                    int n = num - '1'; // convert '1'-'9' → 0-8
+                    int boxIndex = (i / 3) * 3 + (j / 3); // map 3x3 box
+
+                    if (rows[i][n] || cols[j][n] || boxes[boxIndex][n]) {
+                        return false; // duplicate found
+                    }
+
+                    rows[i][n] = cols[j][n] = boxes[boxIndex][n] = true;
+                }
+            }
+        }
+        return true;
+    }
+}
